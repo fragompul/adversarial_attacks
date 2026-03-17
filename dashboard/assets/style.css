@@ -1,0 +1,140 @@
+/* ==========================================================================
+   GLOBAL CONFIGURATION & STREAMLIT OVERRIDES
+   ========================================================================== */
+
+/* Hide Streamlit default branding for a white-label, professional look */
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+header {visibility: hidden;}
+
+/* Improve global font rendering */
+html, body, [class*="css"] {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ==========================================================================
+   METRIC CARDS (KPIs) - Modern SaaS Style
+   ========================================================================== */
+
+/* Main container for metrics */
+[data-testid="stMetric"] {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    padding: 20px 24px;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease; /* Smooth animation */
+}
+
+/* Hover effect: lift the card up and increase shadow */
+[data-testid="stMetric"]:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    border-color: #cbd5e1;
+}
+
+/* Metric Label (Title) */
+[data-testid="stMetricLabel"] {
+    font-size: 1.05rem !important;
+    font-weight: 600 !important;
+    color: #64748b; /* Slate gray */
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+}
+
+/* Metric Value (Number) */
+[data-testid="stMetricValue"] {
+    font-size: 2.5rem !important;
+    font-weight: 800 !important;
+    color: #0f172a; /* Dark navy */
+}
+
+/* Metric Delta (Percentage/Difference) */
+[data-testid="stMetricDelta"] {
+    font-weight: 600 !important;
+}
+
+/* ==========================================================================
+   BUTTONS - Interactive and unified color palette
+   ========================================================================== */
+
+/* Primary Action Buttons */
+button[kind="primary"] {
+    background-color: #2563eb !important; /* Professional Indigo/Blue */
+    color: white !important;
+    font-weight: 600 !important;
+    border-radius: 8px !important;
+    padding: 0.5rem 1rem !important;
+    border: none !important;
+    transition: all 0.2s ease-in-out !important;
+    box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2) !important;
+}
+
+/* Hover state for primary buttons */
+button[kind="primary"]:hover {
+    background-color: #1d4ed8 !important; /* Darker blue on hover */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px -1px rgba(37, 99, 235, 0.3) !important;
+}
+
+/* Active/Click state */
+button[kind="primary"]:active {
+    transform: translateY(0px);
+}
+
+/* ==========================================================================
+   TABS NAVIGATION
+   ========================================================================== */
+
+/* Space between tabs */
+.stTabs [data-baseweb="tab-list"] {
+    gap: 12px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+/* Individual Tab */
+.stTabs [data-baseweb="tab"] {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 16px;
+    padding-right: 16px;
+    border-radius: 8px 8px 0 0;
+    transition: background-color 0.2s ease;
+}
+
+/* Tab Hover */
+.stTabs [data-baseweb="tab"]:hover {
+    background-color: #f1f5f9;
+}
+
+/* Selected Tab */
+.stTabs [aria-selected="true"] {
+    background-color: transparent;
+    border-bottom: 3px solid #2563eb !important;
+    color: #2563eb !important;
+    font-weight: 700 !important;
+}
+
+/* ==========================================================================
+   SIDEBAR & EXPANDERS
+   ========================================================================== */
+
+/* Subtle background for the sidebar to separate it from main content */
+[data-testid="stSidebar"] {
+    background-color: #f8fafc;
+    border-right: 1px solid #e2e8f0;
+}
+
+/* Style Expanders (How to interpret this chart, etc.) */
+[data-testid="stExpander"] {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+[data-testid="stExpander"] > summary {
+    font-weight: 600;
+    color: #334155;
+}
