@@ -76,11 +76,10 @@ if execute_btn:
     feature_extractor = tf.keras.Model(inputs=model.input, outputs=model.get_layer(layer_name).output)
     
     # Load Images
-    dataset_path = '../images/miniimagenet_random_100/'
-    image_paths = load_sample_images(dataset_path, num_samples)
+    image_paths = load_sample_images(IMAGES_DIR, num_samples)
     
     if len(image_paths) == 0:
-        st.error(f"No images found in '{dataset_path}'. Please ensure the path is correct.")
+        st.error(f"No images found in '{IMAGES_DIR}'. Please ensure the path is correct.")
     else:
         with st.spinner(f"Extracting features and generating attacks for {len(image_paths)} images..."):
             original_features = []
