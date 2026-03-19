@@ -10,6 +10,12 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+# Get the absolute path of the directory where Home.py is located
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+CSS_PATH = os.path.join(BASE_DIR, "assets", "style.css")
+IMG_PATH = os.path.join(BASE_DIR, "assets", "flow_diagram.png")
+CSV_PATH = os.path.join(BASE_DIR, "data", "robustness_metrics.csv")
+
 # Function to load local CSS for custom styling
 def load_css(file_name):
     if os.path.exists(file_name):
@@ -17,14 +23,13 @@ def load_css(file_name):
             st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
 # Call the function to apply styles
-load_css("assets/style.css")
+load_css(CSS_PATH)
 
 # Helper function to load data dynamically
 @st.cache_data
 def load_kpi_data():
-    csv_path = os.path.join('data', 'robustness_metrics.csv')
-    if os.path.exists(csv_path):
-        return pd.read_csv(csv_path)
+    if os.path.exists(CSV_PATH):
+        return pd.read_csv(CSV_PATH)
     return None
 
 # Page Header
@@ -40,7 +45,10 @@ Convolutional Neural Networks (CNNs) have achieved superhuman performance in ima
 st.subheader("⚙️ The Concept: How it works")
 st.info("The math behind the illusion: By calculating the gradient of the loss function with respect to the input pixels, we can push the image across the model's decision boundaries.")
 
-st.image("assets/flow_diagram.png", caption="Conceptual Pipeline of an Adversarial Attack", use_container_width=True)
+if os.path.exists(IMG_PATH):
+    st.image(IMG_PATH, caption="Conceptual Pipeline of an Adversarial Attack", use_container_width=True)
+else:
+    st.warning("⚠️ Diagram image not found. Please ensure 'flow_diagram.png' is uploaded to 'dashboard/assets/' on GitHub.")
 
 st.divider()
 
