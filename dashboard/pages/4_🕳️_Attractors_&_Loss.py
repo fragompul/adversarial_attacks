@@ -14,6 +14,11 @@ from utils.model_loader import load_model_config
 # Page Configuration
 st.set_page_config(page_title="Attractors & Loss Landscape", page_icon="🕳️", layout="wide")
 
+
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+DASHBOARD_DIR = os.path.dirname(CURRENT_DIR)
+CSS_PATH = os.path.join(DASHBOARD_DIR, "assets", "style.css")
+
 # Function to load local CSS for custom styling
 def load_css(file_name):
     if os.path.exists(file_name):
@@ -21,7 +26,7 @@ def load_css(file_name):
             st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
 # Call the function to apply styles
-load_css("assets/style.css")
+load_css(CSS_PATH)
 
 # Helper Functions
 def preprocess_for_model(img_pil, target_size, preprocess_fn):
