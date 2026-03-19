@@ -14,9 +14,9 @@ from utils.model_loader import load_model_config
 # Page Configuration
 st.set_page_config(page_title="Attractors & Loss Landscape", page_icon="🕳️", layout="wide")
 
-
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 DASHBOARD_DIR = os.path.dirname(CURRENT_DIR)
+REPO_DIR = os.path.dirname(DASHBOARD_DIR)
 CSS_PATH = os.path.join(DASHBOARD_DIR, "assets", "style.css")
 
 # Function to load local CSS for custom styling
