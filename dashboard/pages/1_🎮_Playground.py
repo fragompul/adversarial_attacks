@@ -302,7 +302,7 @@ if uploaded_file is not None:
             
         with col3:
             st.image(adv_display_img, caption="Adversarial Image", use_container_width=True)
-            st.markdown("##### New Predictions (Hacked):")
+            st.markdown("##### New Predictions (Adversarial):")
             for i, (net_id, label, prob) in enumerate(decoded_adv):
                 color = "red" if i==0 and label != decoded_orig[0][1] else "normal"
                 st.progress(float(prob), text=f"🚨 {label.capitalize()} ({prob*100:.1f}%)" if color=="red" else f"{label.capitalize()} ({prob*100:.1f}%)")
