@@ -60,9 +60,9 @@ Here, you can visualize the exact trajectory (Attack Vector) that the adversaria
 st.sidebar.header("⚙️ Projection Parameters")
 
 # Sidebar Controls
-selected_model = st.sidebar.selectbox("Select CNN Architecture", ['MobileNetV2', 'EfficientNetB0', 'InceptionV3'])
+selected_model = st.sidebar.selectbox("Select CNN Architecture", ['MobileNetV2', 'EfficientNetB0', 'InceptionV3'], help="Observe how the internal latent representations differ across architectures.")
 selected_attack = st.sidebar.selectbox("Select Attack Algorithm", ['FGSM']) # Kept to FGSM for real-time speed in 2D projection
-epsilon = st.sidebar.slider("Perturbation Magnitude (ε)", min_value=0.01, max_value=0.2, value=0.05, step=0.01)
+epsilon = st.sidebar.slider("Perturbation Magnitude (ε)", min_value=0.01, max_value=0.2, value=0.05, step=0.01, help="Higher epsilon means stronger but more visible attacks.")
 num_samples = st.sidebar.slider("Number of Images to Project", min_value=5, max_value=30, value=15, step=5)
 
 execute_btn = st.sidebar.button("🌌 Generate Latent Projection", type="primary", use_container_width=True)
