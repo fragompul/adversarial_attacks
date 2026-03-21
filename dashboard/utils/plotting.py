@@ -5,9 +5,10 @@ import plotly.express as px
 
 # Consistent colors
 MODEL_COLORS = {
-    'EfficientNetB0': '#2ca02c', 
-    'InceptionV3': '#1f77b4',    
-    'MobileNetV2': '#ff7f0e'     
+    'MobileNetV2': '#ff7f0e', # Orange
+    'EfficientNetB0': '#2ca02c', # Green
+    'InceptionV3': '#1f77b4', # Blue
+    'TrafficNet (GTSRB)': '#d62728' # Red
 }
 
 def create_radar_chart(df):

@@ -78,7 +78,7 @@ def get_dft_magnitude(img_array):
 st.sidebar.title("⚙️ Attack Parameters")
 
 # Model Selection
-selected_model = st.sidebar.selectbox("Select CNN Architecture", ['MobileNetV2', 'EfficientNetB0', 'InceptionV3'], help="Choose the underlying neural network. Different architectures exhibit distinct geometric vulnerabilities and baseline accuracies.")
+selected_model = st.sidebar.selectbox("Select CNN Architecture", ['MobileNetV2', 'EfficientNetB0', 'InceptionV3', 'TrafficNet (GTSRB)'], help="Choose the underlying neural network. Different architectures exhibit distinct geometric vulnerabilities and baseline accuracies. The TrafficNet is a specialized CNN for autonomous driving scenarios.")
 
 # Attack Selection
 selected_attack = st.sidebar.selectbox("Select Attack Algorithm", ['FGSM', 'PGD', 'C&W', 'DeepFool', 'Targeted I-FGSM'], help="Algorithm to craft the adversarial noise.")
@@ -101,76 +101,86 @@ if selected_attack == 'DeepFool':
 
 if selected_attack == 'Targeted I-FGSM':
     st.sidebar.markdown("**🎯 Targeted Settings**")
+
+    if selected_model == 'TrafficNet (GTSRB)':
+        TARGET_CLASSES = {
+            "Speed limit (30km/h)": 1, "Speed limit (50km/h)": 2, "Speed limit (120km/h)": 8,
+            "Priority road": 12, "Yield": 13, "Stop": 14, "No vehicles": 15, "No entry": 17,
+            "General caution": 18, "Pedestrians": 27, "Turn right ahead": 33
+        }
+        target_name = st.sidebar.selectbox("Select Target Class", list(TARGET_CLASSES.keys()), help="The exact traffic sign you want to force the network to falsely predict.")
+        target_class_idx = TARGET_CLASSES[target_name]
     
-    # Curated list of distinct ImageNet classes to avoid a 1000-item dropdown initially
-    BASE_TARGET_CLASSES = {
-        "Ladybug": 301,
-        "Golden Retriever": 207,
-        "Gibbon": 368,
-        "Giant Panda": 388,
-        "Sports Car": 817,
-        "Pizza": 963,
-        "Espresso": 967,
-        "Volcano": 980,
-        "Chihuahua": 151,
-        "School Bus": 779
-    }
-    
-    # Extended list for users who want more options
-    EXTENDED_TARGET_CLASSES = {
-        **BASE_TARGET_CLASSES,
-        "Goldfish": 1,
-        "Great White Shark": 2,
-        "Hammerhead Shark": 3,
-        "Ostrich": 9,
-        "Bald Eagle": 22,
-        "African Chameleon": 47,
-        "Peacock": 84,
-        "Macaw": 87,
-        "Koala": 105,
-        "Jellyfish": 107,
-        "Flamingo": 130,
-        "Pelican": 144,
-        "French Bulldog": 245,
-        "Lion": 291,
-        "Tiger": 292,
-        "Monarch Butterfly": 323,
-        "Zebra": 340,
-        "Hippopotamus": 344,
-        "Macaque": 382,
-        "African Elephant": 386,
-        "Acoustic Guitar": 403,
-        "Airliner": 404,
-        "Ambulance": 407,
-        "Bicycle": 444,
-        "Castle": 483,
-        "Cellular Telephone": 487,
-        "Coffee Mug": 504,
-        "Digital Clock": 530,
-        "Electric Guitar": 546,
-        "Grand Piano": 579,
-        "Laptop": 620,
-        "Microphone": 651,
-        "Space Shuttle": 812,
-        "Submarine": 833,
-        "Toilet": 861,
-        "Tractor": 866,
-        "Ice Cream": 928,
-        "Cheeseburger": 933,
-        "Broccoli": 937,
-        "Strawberry": 949,
-        "Banana": 954,
-        "Daisy": 985,
-        "Toilet Tissue": 999
-    }
-    
-    # Toggle to show more options without cluttering the UI initially
-    show_extended = st.sidebar.checkbox("Show extended class list", help="Expand the dropdown to include more specific ImageNet categories.")
-    
-    classes_to_show = EXTENDED_TARGET_CLASSES if show_extended else BASE_TARGET_CLASSES
-    
-    target_name = st.sidebar.selectbox("Select Target Class", list(classes_to_show.keys()), help="The exact category you want to force the network to falsely predict (sink class).")
-    target_class_idx = classes_to_show[target_name]
+    else:
+        # Curated list of distinct ImageNet classes to avoid a 1000-item dropdown initially
+        BASE_TARGET_CLASSES = {
+            "Ladybug": 301,
+            "Golden Retriever": 207,
+            "Gibbon": 368,
+            "Giant Panda": 388,
+            "Sports Car": 817,
+            "Pizza": 963,
+            "Espresso": 967,
+            "Volcano": 980,
+            "Chihuahua": 151,
+            "School Bus": 779
+        }
+        
+        # Extended list for users who want more options
+        EXTENDED_TARGET_CLASSES = {
+            **BASE_TARGET_CLASSES,
+            "Goldfish": 1,
+            "Great White Shark": 2,
+            "Hammerhead Shark": 3,
+            "Ostrich": 9,
+            "Bald Eagle": 22,
+            "African Chameleon": 47,
+            "Peacock": 84,
+            "Macaw": 87,
+            "Koala": 105,
+            "Jellyfish": 107,
+            "Flamingo": 130,
+            "Pelican": 144,
+            "French Bulldog": 245,
+            "Lion": 291,
+            "Tiger": 292,
+            "Monarch Butterfly": 323,
+            "Zebra": 340,
+            "Hippopotamus": 344,
+            "Macaque": 382,
+            "African Elephant": 386,
+            "Acoustic Guitar": 403,
+            "Airliner": 404,
+            "Ambulance": 407,
+            "Bicycle": 444,
+            "Castle": 483,
+            "Cellular Telephone": 487,
+            "Coffee Mug": 504,
+            "Digital Clock": 530,
+            "Electric Guitar": 546,
+            "Grand Piano": 579,
+            "Laptop": 620,
+            "Microphone": 651,
+            "Space Shuttle": 812,
+            "Submarine": 833,
+            "Toilet": 861,
+            "Tractor": 866,
+            "Ice Cream": 928,
+            "Cheeseburger": 933,
+            "Broccoli": 937,
+            "Strawberry": 949,
+            "Banana": 954,
+            "Daisy": 985,
+            "Toilet Tissue": 999
+        }
+        
+        # Toggle to show more options without cluttering the UI initially
+        show_extended = st.sidebar.checkbox("Show extended class list", help="Expand the dropdown to include more specific ImageNet categories.")
+        
+        classes_to_show = EXTENDED_TARGET_CLASSES if show_extended else BASE_TARGET_CLASSES
+        
+        target_name = st.sidebar.selectbox("Select Target Class", list(classes_to_show.keys()), help="The exact category you want to force the network to falsely predict (sink class).")
+        target_class_idx = classes_to_show[target_name]
     
     use_threshold = st.sidebar.checkbox("Use confidence threshold", help="Require the attack to push the model's confidence for the target class above a specific percentage.")
     if use_threshold:
